@@ -1,0 +1,324 @@
+{
+	"PSDev-Build": {
+		"scope": "powershell",
+		"prefix": "PSDev-Build",
+		"body": [
+			"#Requires -module PSModuleDevTool\n",
+			"[CmdletBinding()]",
+			"Param(",
+			"\t[Parameter()]",
+			"\t[switch]$$Release",
+			")\n",
+			"$$Leaf = Split-Path $$PSScriptRoot -Leaf",
+			"Push-Location",
+			"Set-Location $$PSScriptRoot\n",
+			"#region <code>",
+			"# Creat *.psd1",
+			"New-ModuleManifest \"$$Leaf.psd1\" `",
+			"\t-RootModule \"$$Leaf.psm1\"$0",
+			"Write-Verbose \"Build $$Leaf.psd1\"\n",
+			"# *-Help.xml, *.format.ps1xml",
+			"Import-Module PSModuleDevTool",
+			"Convert-PSHelpXml -Path \"bin\\$$Leaf-Help.ps1\" -OutXml \"$$Leaf-Help.xml\"",
+			"Write-Verbose \"Build $$Leaf-Help.xml\"",
+			"# Convert-PSFormatXml -Path \"bin\\$$Leaf-Format.ps1\" -OutXml \"$$Leaf.format.ps1xml\"",
+			"# Write-Verbose \"Build $$Leaf.format.ps1xml\"",
+			"Remove-Module PSModuleDevTool",
+			"#endregion </code>\n",
+			"if ($$Release) {",
+			"\tpowershell.exe -NoLogo -ExecutionPolicy ByPass -Command {",
+			"\t\t$$Leaf = Split-Path $$PWD -Leaf",
+			"\t\t$$DestPath = \"$($$HOME)\\Documents\\WindowsPowerShell\\Modules\"",
+			"\t\tRemove-Item \"$$DestPath\\\\$$Leaf\" -Recurse -Force",
+			"\t\tCopy-Item $$PWD -Destination $$DestPath -Recurse -Force",
+			"\t}",
+			"\tWrite-Verbose \"Copy to $($$HOME)\\Documents\\WindowsPowerShell\\Modules\\\\$$Leaf\"",
+			"}",
+			"Pop-Location\n"
+		],
+		"description": "填充 build.ps1 文件"
+	},
+	"ConvertTo-PSHelpXml": {
+		"prefix": "psdev-help",
+		"body": [
+			"# ${1:verb}-${2:noun}",
+			"@\"",
+			".Synopsis",
+			"\t${1:verb}-${2:noun}",
+			"\t${3:简述}",
+			".Description",
+			"\t${3:详述}",
+			".Syntax",
+			"\t${1:verb}-${2:noun} [-param <type>]",
+			".Parameters",
+			"\tpshelp$0",
+			".Inputs",
+			"\tNone",
+			"\t# 输入描述",
+			".Outputs",
+			"\tNone",
+			"\t# 输出描述",
+			".Examples",
+			"\tpshelp",
+			".RelatedLinks",
+			"\tgithub: https://github.com/empyrealtear/PSModuleDevTool",
+			"\"@\n"
+		],
+		"description": "脚本式帮助"
+	},
+	"Add-HelpParameters": {
+		"prefix": "pshelp-parameters",
+		"body": [
+			"-${1:param} <${2:type}>",
+			"\t# ${3:参数描述}",
+			"\tRequired:\tFalse",
+			"\tPosition:\t0",
+			"\tDefault :\tNone",
+			"\tPipeline:\tFalse",
+			"\tWildcard:\tFalse\n"
+		],
+		"description": "脚本式帮助-参数"
+	},
+	"Add-HelpExamples": {
+		"prefix": "pshelp-examples",
+		"body": [
+			"Example ${1:1}: ${2:例子简述}",
+			"\tPS C:\\> ${3:命令行}",
+			"\t${4:返回值}",
+			"",
+			"\t# ${5:例子详述}\n"
+		],
+		"description": "脚本式帮助-例子"
+	},
+	"ConvertTo-PSFormatXml": {
+		"prefix": "psdev-format",
+		"body": [
+			"@'",
+			"# DefaultSettings",
+			"# SelectionSets",
+			"# Controls",
+			"# ViewDefinitions",
+			"Views",
+			"\tName: ${1:ViewName}",
+			"\tSelectBy",
+			"\t\t[${2:TypeName}]",
+			"\tTable",
+			"\t\t# -AutoSize",
+			"\t\t# -HideTableHeaders",
+			"\t\tHeaders",
+			"\t\t\tLabel     : ${3:Label}",
+			"\t\t\t# Width   : 20",
+			"\t\t\tAlignment : Right",
+			"\t\tRows",
+			"\t\t\tSelectBy",
+			"\t\t\t\t[${2:TypeName}]",
+			"\t\t\tItems",
+			"\t\t\t\t$$_.${4:PropName}",
+			"\t\t\t\t# { ScriptBlock }"
+			"'@"
+		],
+		"description": "格式架构"
+	},
+	"Add-FormatDefaultSet": {
+		"prefix": "psformat-defaultset",
+		"body": [
+			"DefaultSet",
+			"\t# -ShowError",
+			"\t# -DisplayError",
+			"\t# -WarpTable",
+			"\t# PropCount : 5",
+			"\tEnums",
+			"\t\t# Expand : EnumOnly | CoreOnly | Both",
+			"\t\tSelectBy",
+			"\t\t\t[${1:TypeName}]",
+			"\t\t\t# Condition",
+			"\t\t\t#\t [TypeName]"
+		],
+		"description": "格式架构-默认集"
+	},
+	"Add-FormatSelectionSets": {
+		"prefix": "psformat-sets",
+		"body": [
+			"Sets",
+			"\tName: ${1:SetName}",
+			"\t[${2:TypeName}]"
+		],
+		"description": "格式架构-预选集"
+	},
+	"Add-FormatControls": {
+		"prefix": "psformat-controls",
+		"body": [
+			"Ctrls",
+			"\tName: ${1:ControlName}",
+			"\tEntries",
+			"\t\t# SelectBy",
+			"\t\t#\t [TypeName]",
+			"\t\tItems",
+			"\t\t\tText : ${1:Text}",
+			"\t\t\t# Express",
+			"\t\t\t# \tCtrlName : ControlName",
+			"\t\t\t# \t$$_.PropName",
+			"\t\t\t# \t{ ScriptBlock }",
+			"\t\t\t# \t# Entries",
+			"\t\t\t# \tCondition",
+			"\t\t\t# \t\t$$_.PropName",
+			"\t\t\t# \t\t{ ScriptBlock }",
+			"\t\t\t# Frame",
+			"\t\t\t# \tLeft    : 2",
+			"\t\t\t# \tRight   : 2",
+			"\t\t\t# \tIndent  : 2",
+			"\t\t\t# \tHanging : 2"
+		],
+		"description": "格式架构-控件集"
+	},
+	"Add-FormatSelectedBy": {
+		"prefix": "psformat-selectby",
+		"body": [
+			"SelectBy",
+			"\t[${1:TypeName}]",
+			"\t# (SetName)",
+			"\t# Condition",
+			"\t#\t [TypeName]",
+			"\t#\t (SetName)",
+			"\t#\t $_.PropName",
+			"\t#\t { ScriptBlock }"
+		],
+		"description": "格式架构-控件集"
+	},
+	"Add-FormatViewDefinitions": {
+		"prefix": "psformat-views",
+		"body": [
+			"Views",
+			"\tName : ViewName",
+			"\tSelectBy",
+			"\t\t[TypeName]",
+			"\t# Controls",
+			"\t# GroupBy",
+			"\t# \tLabel : Label Text",
+			"\t# \t$_.PropName",
+			"\t# \t{ ScriptBlock }",
+			"\t# \tCtrlName : ControlName",
+			"\t# \tEntries",
+			"\t# Table",
+			"\t# List",
+			"\t# Wide",
+			"\t# CustomCtrl"
+		],
+		"description": "格式架构-视图集"
+	},
+	"Add-FormatTableControl": {
+		"prefix": "psformat-tablectrl",
+		"body": [
+			"Table",
+			"\t# -AutoSize",
+			"\t-HideTableHeaders",
+			"\tHeaders",
+			"\t\tLabel : Mode",
+			"\t\tWidth : 20",
+			"\t\tAlignment : Left",
+			"\tRows",
+			"\t\tSelectBy",
+			"\t\t\t[TypeName]",
+			"\t\tItems",
+			"\t\t\tAlignment : Center",
+			"\t\t\t$_.Mode"
+		],
+		"description": "格式架构-表视图"
+	},
+	"Add-FormatListControl": {
+		"prefix": "psformat-listctrl",
+		"body": [
+			"List",
+			"\tEntries",
+			"\t\tSelectBy",
+			"\t\t\t[TypeName]",
+			"\t\tItems",
+			"\t\t\tLabel : Label",
+			"\t\t\t$_.PropName",
+			"\t\t\t# -f \"Pattern\"",
+			"\t\t\t# {ScriptBlock}",
+			"\t\t\t# Condition"
+		],
+		"description": "格式架构-列表视图"
+	},
+	"Add-FormatWideControl": {
+		"prefix": "psformat-widectrl",
+		"body": [
+			"Wide",
+			"\tCol : 10",
+			"\tEntries",
+			"\t\t# Item",
+			"\t\t# \t$_.PropName",
+			"\t\t# \t-f \"Format\"",
+			"\t\t# \t{ ScriptBlock }"
+		],
+		"description": "格式架构-宽视图"
+	},
+	"ConvertTo-PSTypeXml": {
+		"prefix": "psdev-types",
+		"body": [
+			"Types",
+			"\tName : ${1:TypeName}",
+			"\t# Members"
+		],
+		"description": "类成员扩展"
+	},
+	"Add-AliasPropertyNode": {
+		"prefix": "pstype-aliasprop",
+		"body": [
+			"Members",
+			"\t# AliasPropertyNode",
+			"\t$$_.${1:Name} -> $$_.${SourceProperty}"
+		],
+		"description": "类成员扩展-别名属性"
+	},
+	"Add-ScriptPropertyNode": {
+		"prefix": "pstype-scriptprop",
+		"body": [
+			"Members",
+			"\t# ScriptPropertyNode",
+			"\t$$_.${1:Name} -> {",
+			"\t${2:ScriptBlock}",
+			"\t}"
+		],
+		"description": "类成员扩展-代码段属性"
+	},
+	"Add-CodePropertyNode": {
+		"prefix": "pstype-codeprop",
+		"body": [
+			"Members",
+			"\t# CodePropertyNode",
+			"\t$$_.${1:Name} -> [${2:Class}].${3:Property}"
+		],
+		"description": "类成员扩展-静态方法属性"
+	},
+	"Add-NotePropertyNode": {
+		"prefix": "pstype-noteprop",
+		"body": [
+			"Members",
+			"\t# NotePropertyNode",
+			"\t$$_.${1:Name} -> ${2:Value}"
+		],
+		"description": "类成员扩展-笔记属性"
+	},
+	"Add-MemberSetNode": {
+		"prefix": "pstype-memberset",
+		"body": [
+			"Members",
+			"\t# MemberSetNode",
+			"\t[${1:MemberSet}].${2:Property} -> ${3:[,Property]}"
+		],
+		"description": "类成员扩展-成员集"
+	},
+	"Add-ScriptMethodNode": {
+		"prefix": "pstype-scriptmethod",
+		"body": [
+			"Members",
+			"\t# ScriptMethodNode",
+			"\t$$_.${1:Name}() -> {",
+			"\t${2:ScriptBlock}",
+			"\t}"
+		],
+		"description": "类成员扩展-代码段方法"
+	},
+}

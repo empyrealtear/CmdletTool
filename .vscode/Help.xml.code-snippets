@@ -1,0 +1,284 @@
+{
+	// Reference: https://docs.microsoft.com/zh-cn/powershell/scripting/developer/help/how-to-create-the-cmdlet-help-file
+	"help-xml": {
+		"scope": "xml,Help.xml",
+		"prefix": "help-xml",
+		"body": [
+			"<!-- ${1:verb}-${2:nonu} -->",
+			"<command:command xmlns:maml=\"http://schemas.microsoft.com/maml/2004/10\"",
+			"\txmlns:command=\"http://schemas.microsoft.com/maml/dev/command/2004/10\"",
+			"\txmlns:dev=\"http://schemas.microsoft.com/maml/dev/2004/10\">",
+			"\t<!-- help-details -->",
+			"\t<command:details>",
+			"\t\t<command:name>${1:verb}-${2:nonu}</command:name>",
+			"\t\t<maml:description>",
+			"\t\t\t<maml:para>${3:desc}</maml:para>",
+			"\t\t</maml:description>",
+			"\t\t<maml:copyright>",
+			"\t\t\t<maml:para/>",
+			"\t\t</maml:copyright>",
+			"\t\t<command:verb>${1:verb}</command:verb>",
+			"\t\t<command:noun>${2:noun}</command:noun>",
+			"\t\t<dev:version/>",
+			"\t</command:details>",
+			"\t<!-- help-description -->",
+			"\t<maml:description>",
+			"\t\t<maml:para>${3:desc}</maml:para>",
+			"\t</maml:description>",
+			"\t<!-- help-syntax -->",
+			"\t<command:syntax>",
+			"\t\t<!-- help-syntaxItem -->",
+			"\t\t<command:syntaxItem>",
+			"\t\t\t<maml:name>${1:verb}-${2:nonu}</maml:name>",
+			"\t\t\t<!-- help-parameter -->",
+			"\t\t</command:syntaxItem>$0",
+			"\t</command:syntax>",
+			"\t<!-- help-parameters -->",
+			"\t<command:parameters>",
+			"\t\t<!-- help-parameter -->",
+			"\t</command:parameters>",
+			"\t<!-- help-inputTypes -->",
+			"\t<command:inputTypes/>",
+			"\t<!-- help-returnValues -->",
+			"\t<command:returnValues/>",
+			"\t<command:terminatingErrors/>",
+			"\t<command:nonTerminatingErrors/>",
+			"\t<!-- help-examples -->",
+			"\t<command:examples>",
+			"\t\t<!-- help-example -->",
+			"\t</command:examples>",
+			"\t<!-- help-relatedLinks -->",
+			"\t<maml:relatedLinks>",
+			"\t\t<maml:navigationLink>",
+			"\t\t\t<maml:linkText>github</maml:linkText>",
+			"\t\t\t<maml:uri>https://github.com/empyrealtear/psadb_Module</maml:uri>",
+			"\t\t</maml:navigationLink>",
+			"\t\t<maml:navigationLink>",
+			"\t\t\t<maml:linkText>${1:verb}-${2:nonu}</maml:linkText>",
+			"\t\t\t<maml:uri/>",
+			"\t\t</maml:navigationLink>",
+			"\t</maml:relatedLinks>",
+			"</command:command>\n",
+		],
+		"description": "扩展帮助-自定义常用规范"
+	},
+	"help-helpItems": {
+		"scope": "xml,Help.xml",
+		"prefix": "help-helpItems",
+		"body": [
+			"<helpItems xmlns=\"http://msh\" schema=\"maml\">",
+			"\t${0:<!-- help-command -->}",
+			"</helpItems>"
+		],
+		"description": "扩展帮助-帮助总节点，导入命名空间maml"
+	},
+	"help-command": {
+		"scope": "xml,Help.xml",
+		"prefix": "help-command",
+		"body": [
+			"<!-- ${1:verb}-${2:nonu} -->",
+			"<command:command xmlns:maml=\"http://schemas.microsoft.com/maml/2004/10\"",
+			"\txmlns:command=\"http://schemas.microsoft.com/maml/dev/command/2004/10\"",
+			"\txmlns:dev=\"http://schemas.microsoft.com/maml/dev/2004/10\">",
+			"\t<!-- help-details -->$0",
+			"\t<!-- help-description -->",
+			"\t<!-- help-syntax -->",
+			"\t<!-- help-parameters -->",
+			"\t<!-- help-inputTypes -->",
+			"\t<command:inputTypes/>",
+			"\t<!-- help-returnValues -->",
+			"\t<command:returnValues/>",
+			"\t<command:terminatingErrors/>",
+			"\t<command:nonTerminatingErrors/>",
+			"\t<!-- help-examples -->",
+			"\t<!-- help-relatedLinks -->",
+			"</command:command>\n",
+		],
+		"description": "扩展帮助-命令"
+	},
+	// 次级节点元素
+	"help-details": {
+		"scope": "xml,Help.xml",
+		"prefix": "help-details",
+		"body": [
+			"<command:details>",
+			"\t<command:name>${1:verb}-${2:noun}</command:name>",
+			"\t<maml:description>",
+			"\t\t<maml:para>${3:desc}</maml:para>",
+			"\t</maml:description>",
+			"\t<maml:copyright>",
+			"\t\t<maml:para/>",
+			"\t</maml:copyright>",
+			"\t<command:verb>${1:verb}</command:verb>",
+			"\t<command:noun>${2:noun}</command:noun>",
+			"\t<dev:version/>",
+			"</command:details>",
+		],
+		"description": "扩展帮助-名称和摘要"
+	},
+	"help-description": {
+		"scope": "xml,Help.xml",
+		"prefix": "help-description",
+		"body": [
+			"<maml:description>",
+			"\t<maml:para>${0:desc}</maml:para>",
+			"</maml:description>",
+		],
+		"description": "扩展帮助-说明"
+	},
+	"help-syntax": {
+		"scope": "xml,Help.xml",
+		"prefix": "help-syntax",
+		"body": [
+			"<command:syntax>",
+			"\t<!-- help-syntaxItem -->$0",
+			"</command:syntax>",
+		],
+		"description": "扩展帮助-语法"
+	},
+	"help-syntaxItem": {
+		"scope": "xml,Help.xml",
+		"prefix": "help-syntaxItem",
+		"body": [
+			"<command:syntaxItem>",
+			"\t<maml:name>${1:verb}-${2:nonu}</maml:name>",
+			"\t<!-- help-parameter -->$0",
+			"</command:syntaxItem>",
+		],
+		"description": "扩展帮助-语法段"
+	},
+	"help-parameters": {
+		"scope": "xml,Help.xml",
+		"prefix": "help-parameters",
+		"body": [
+			"<command:parameters>",
+			"\t<!-- help-parameter -->$0",
+			"</command:parameters>",
+		],
+		"description": "扩展帮助-参数集"
+	},
+	"help-parameter": {
+		"scope": "xml,Help.xml",
+		"prefix": "help-parameter",
+		"body": [
+			"<command:parameter required=\"${1:true|false}\" variableLength=\"${2:true}\" globbing=\"${3:false}\"",
+			"\tpipelineInput=\"${4:false}\" position=\"${5:Int32,named}\">",
+			"\t<maml:name>${6:param-name}</maml:name>",
+			"\t<maml:description/>",
+			"\t<command:parameterValue required=\"true\" variableLength=\"false\">${7:param-type}</command:parameterValue>",
+			"\t<dev:type>",
+			"\t\t<maml:name>${7:param-type}</maml:name>",
+			"\t\t<maml:uri/>",
+			"\t</dev:type>",
+			"\t${8:<dev:defaultValue>${9:default}</dev:defaultValue>}",
+			"</command:parameter>",
+		],
+		"description": "扩展帮助-参数"
+	},
+	"help-inputTypes": {
+		"scope": "xml,Help.xml",
+		"prefix": "help-inputTypes",
+		"body": [
+			"<command:inputTypes>",
+			"\t<!-- help-inputType -->$0",
+			"</command:inputTypes>",
+		],
+		"description": "扩展帮助-输入集"
+	},
+	"help-inputType": {
+		"scope": "xml,Help.xml",
+		"prefix": "help-inputType",
+		"body": [
+			"<command:inputType>",
+			"\t<dev:type>",
+			"\t\t<maml:name>${1:type-name}</maml:name>",
+			"\t\t<maml:uri/>",
+			"\t</dev:type>",
+			"\t<maml:description>",
+			"\t\t<maml:para>${0:desc}</maml:para>",
+			"\t</maml:description>",
+			"</command:inputType>",
+		],
+		"description": "扩展帮助-输入"
+	},
+	"help-returnValues": {
+		"scope": "xml,Help.xml",
+		"prefix": "help-returnValues",
+		"body": [
+			"<command:returnValues>",
+			"\t<!-- help-returnValue -->$0",
+			"</command:returnValues>",
+		],
+		"description": "扩展帮助-返回集"
+	},
+	"help-returnValue": {
+		"scope": "xml,Help.xml",
+		"prefix": "help-returnValue",
+		"body": [
+			"<command:returnValue>",
+			"\t<dev:type>",
+			"\t\t<maml:name>${1:type-name}</maml:name>",
+			"\t\t<maml:uri/>",
+			"\t</dev:type>",
+			"\t<maml:description>",
+			"\t\t<maml:para>${2:desc}</maml:para>",
+			"\t</maml:description>",
+			"</command:returnValue>",
+		],
+		"description": "扩展帮助-返回值"
+	},
+	"help-examples": {
+		"scope": "xml,Help.xml",
+		"prefix": "help-examples",
+		"body": [
+			"<command:examples>",
+			"\t<!-- help-example -->$0",
+			"</command:examples>",
+		],
+		"description": "扩展帮助-样例集"
+	},
+	"help-example": {
+		"scope": "xml,Help.xml",
+		"prefix": "help-example",
+		"body": [
+			"<command:example>",
+			"\t<maml:title>Example ${1:Int32}: ${2:synopsis}</maml:title>",
+			"\t<maml:introduction>",
+			"\t\t<maml:para>PS C:\\></maml:para>",
+			"\t</maml:introduction>",
+			"\t<dev:code>${3:verb}-${4:nonu}</dev:code>",
+			"\t<dev:remarks>",
+			"\t\t<maml:para>${5:output}</maml:para>",
+			"\t\t<maml:para/>",
+			"\t\t<maml:para/>",
+			"\t\t<maml:para>${6:desc}</maml:para>",
+			"\t</dev:remarks>",
+			"</command:example>",
+		],
+		"description": "扩展帮助-样例"
+	},
+	"help-relatedLinks": {
+		"scope": "xml,Help.xml",
+		"prefix": "help-relatedLinks",
+		"body": [
+			"<maml:relatedLinks>",
+			"\t<maml:navigationLink>",
+			"\t\t<maml:linkText>github</maml:linkText>",
+			"\t\t<maml:uri>https://github.com/empyrealtear/psadb_Module</maml:uri>",
+			"\t</maml:navigationLink>",
+			"\t<maml:navigationLink>",
+			"\t\t<maml:linkText>${1:verb}-${2:nonu}</maml:linkText>",
+			"\t\t<maml:uri/>",
+			"\t</maml:navigationLink>",
+			"</maml:relatedLinks>",
+		],
+		"description": "扩展帮助-相关链接"
+	},
+	// 基础元素
+	"help-para": {
+		"scope": "xml,Help.xml",
+		"prefix": "help-para",
+		"body": "<maml:para>$0<maml:para>",
+		"description": "扩展帮助-段落"
+	}
+}

@@ -1,0 +1,441 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<helpItems xmlns="http://msh" schema="maml">
+  <command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+    <details>
+      <name>ConvertTo-PSHelpXml</name>
+      <description>
+        <para>转化指定语法帮助为 Help.xml</para>
+      </description>
+      <copyright />
+      <version />
+      <verb>ConvertTo</verb>
+      <noun>PSHelpXml</noun>
+    </details>
+    <description>
+      <para>转化指定语法帮助为 Help.xml</para>
+    </description>
+    <syntax>
+      <syntaxItem>
+        <name>ConvertTo-PSHelpXml</name>
+        <parameter required="true" position="0" globbing="false" pipelineInput="false" variableLength="true">
+          <name>Path</name>
+          <description />
+          <parameterValue required="true" variableLength="false">String</parameterValue>
+        </parameter>
+        <parameter required="false" position="1" globbing="false" pipelineInput="false" variableLength="true">
+          <name>Encoding</name>
+          <description />
+          <parameterValueGroup>
+            <parameterValue required="true" variableLength="false">Unicode</parameterValue>
+            <parameterValue required="true" variableLength="false">UTF8</parameterValue>
+            <parameterValue required="true" variableLength="false">Ascii</parameterValue>
+            <parameterValue required="true" variableLength="false">Default</parameterValue>
+            <parameterValue required="true" variableLength="false">...</parameterValue>
+          </parameterValueGroup>
+        </parameter>
+        <parameter required="false" position="named" globbing="false" pipelineInput="false" variableLength="true">
+          <name>OutXml</name>
+          <description />
+          <parameterValue required="true" variableLength="false">string</parameterValue>
+        </parameter>
+      </syntaxItem>
+      <syntaxItem>
+        <name>ConvertTo-PSHelpXml</name>
+        <parameter required="true" position="0" globbing="false" pipelineInput="false" variableLength="true">
+          <name>InputObject</name>
+          <description />
+          <parameterValue required="true" variableLength="false">String[]</parameterValue>
+        </parameter>
+        <parameter required="false" position="named" globbing="false" pipelineInput="false" variableLength="true">
+          <name>OutXml</name>
+          <description />
+          <parameterValue required="true" variableLength="false">string</parameterValue>
+        </parameter>
+      </syntaxItem>
+    </syntax>
+    <parameters>
+      <parameter required="true" position="0" globbing="false" pipelineInput="false" variableLength="true">
+        <name>Path</name>
+        <description>
+          <para># 建议搭配 vscode 编写 Help.ps1</para>
+          <para># 支持 Get-Content -Raw 输入</para>
+        </description>
+        <parameterValue required="true" variableLength="false">String</parameterValue>
+      </parameter>
+      <parameter required="false" position="1" globbing="false" pipelineInput="false" variableLength="true">
+        <name>Encoding</name>
+        <description>
+          <para># powershell支持编码的枚举器</para>
+        </description>
+        <parameterValue required="true" variableLength="false">Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding</parameterValue>
+      </parameter>
+      <parameter required="true" position="0" globbing="false" pipelineInput="false" variableLength="true">
+        <name>InputObject</name>
+        <description>
+          <para># 帮助文本字符串</para>
+        </description>
+        <parameterValue required="true" variableLength="false">string[]</parameterValue>
+      </parameter>
+      <parameter required="false" position="named" globbing="false" pipelineInput="true" variableLength="true">
+        <name>OutXml</name>
+        <description>
+          <para># 保存 xml 的路径</para>
+        </description>
+        <parameterValue required="true" variableLength="false">string</parameterValue>
+      </parameter>
+    </parameters>
+    <inputTypes>
+      <inputType>
+        <type>
+          <name>None</name>
+          <uri />
+        </type>
+        <description />
+      </inputType>
+    </inputTypes>
+    <returnValues>
+      <returnValue>
+        <type>
+          <name>None</name>
+          <uri />
+        </type>
+        <description />
+      </returnValue>
+    </returnValues>
+    <terminatingErrors />
+    <nonTerminatingErrors />
+    <examples>
+      <example>
+        <title>Example 1: 文本字符串输入</title>
+        <introduction>
+          <para>PS C:\&gt;</para>
+        </introduction>
+        <code>ConvertTo-PSHelpXml -IntputObject $(Get-Content .\CmdletHelp-Help.txt -Raw)</code>
+        <remarks>
+          <para># 将帮助文本作为字符串整体进行重构</para>
+        </remarks>
+      </example>
+      <example>
+        <title>Example 2: Help.ps1 文件输入</title>
+        <introduction>
+          <para>PS C:\&gt;</para>
+        </introduction>
+        <code>ConvertTo-PSHelpXml -Path .\Cmdlet-Help.ps1 -OutXml .\Cmdlet-Help.xml</code>
+        <remarks>
+          <para># 在 ps1 中编写好易读的帮助文档, 语法格式参考脚本帮助的编写方式</para>
+          <para># https://docs.microsoft.com/zh-cn/powershell/scripting/developer/help/placing-comment-based-help-in-scripts</para>
+        </remarks>
+      </example>
+    </examples>
+    <relatedLinks>
+      <navigationLink>
+        <linkText>github</linkText>
+        <uri>https://github.com/empyrealtear/PSModuleDevTool</uri>
+      </navigationLink>
+      <navigationLink>
+        <linkText>Resolve-PSIndentSyntax</linkText>
+        <uri />
+      </navigationLink>
+      <navigationLink>
+        <linkText>ConvertTo-PSFormatXml</linkText>
+        <uri />
+      </navigationLink>
+      <navigationLink>
+        <linkText>ConvertTo-PSTypeXml</linkText>
+        <uri />
+      </navigationLink>
+    </relatedLinks>
+  </command>
+  <command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+    <details>
+      <name>ConvertTo-PSFormatXml</name>
+      <description>
+        <para>转化指定哈希表为 format.ps1xml</para>
+      </description>
+      <copyright />
+      <version />
+      <verb>ConvertTo</verb>
+      <noun>PSFormatXml</noun>
+    </details>
+    <description>
+      <para>转化指定哈希表为 format.ps1xml</para>
+    </description>
+    <syntax>
+      <syntaxItem>
+        <name>ConvertTo-PSFormatXml</name>
+        <parameter required="true" position="0" globbing="false" pipelineInput="false" variableLength="true">
+          <name>Path</name>
+          <description />
+          <parameterValue required="true" variableLength="false">string</parameterValue>
+        </parameter>
+        <parameter required="false" position="1" globbing="false" pipelineInput="false" variableLength="true">
+          <name>Encoding</name>
+          <description />
+          <parameterValueGroup>
+            <parameterValue required="true" variableLength="false">Unicode</parameterValue>
+            <parameterValue required="true" variableLength="false">UTF8</parameterValue>
+            <parameterValue required="true" variableLength="false">Ascii</parameterValue>
+            <parameterValue required="true" variableLength="false">Default</parameterValue>
+            <parameterValue required="true" variableLength="false">...</parameterValue>
+          </parameterValueGroup>
+        </parameter>
+        <parameter required="false" position="named" globbing="false" pipelineInput="false" variableLength="true">
+          <name>OutXml</name>
+          <description />
+          <parameterValue required="true" variableLength="false">string</parameterValue>
+        </parameter>
+      </syntaxItem>
+      <syntaxItem>
+        <name>ConvertTo-PSFormatXml</name>
+        <parameter required="true" position="0" globbing="false" pipelineInput="false" variableLength="true">
+          <name>InputObject</name>
+          <description />
+          <parameterValue required="true" variableLength="false">String[]</parameterValue>
+        </parameter>
+        <parameter required="false" position="named" globbing="false" pipelineInput="false" variableLength="true">
+          <name>OutXml</name>
+          <description />
+          <parameterValue required="true" variableLength="false">string</parameterValue>
+        </parameter>
+      </syntaxItem>
+    </syntax>
+    <parameters>
+      <parameter required="true" position="0" globbing="false" pipelineInput="false" variableLength="true">
+        <name>Path</name>
+        <description>
+          <para># 建议搭配 vscode 编写 Format.ps1</para>
+          <para># 支持 Get-Content -Raw 输入</para>
+        </description>
+        <parameterValue required="true" variableLength="false">String</parameterValue>
+      </parameter>
+      <parameter required="false" position="1" globbing="false" pipelineInput="false" variableLength="true">
+        <name>Encoding</name>
+        <description>
+          <para># powershell支持编码的枚举器</para>
+        </description>
+        <parameterValue required="true" variableLength="false">Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding</parameterValue>
+      </parameter>
+      <parameter required="true" position="0" globbing="false" pipelineInput="false" variableLength="true">
+        <name>InputObject</name>
+        <description>
+          <para># 类格式文本字符串</para>
+        </description>
+        <parameterValue required="true" variableLength="false">string[]</parameterValue>
+      </parameter>
+      <parameter required="false" position="named" globbing="false" pipelineInput="true" variableLength="true">
+        <name>OutXml</name>
+        <description>
+          <para># 保存 xml 的路径</para>
+        </description>
+        <parameterValue required="true" variableLength="false">string</parameterValue>
+      </parameter>
+    </parameters>
+    <inputTypes>
+      <inputType>
+        <type>
+          <name>None</name>
+          <uri />
+        </type>
+        <description />
+      </inputType>
+    </inputTypes>
+    <returnValues>
+      <returnValue>
+        <type>
+          <name>None</name>
+          <uri />
+        </type>
+        <description />
+      </returnValue>
+    </returnValues>
+    <terminatingErrors />
+    <nonTerminatingErrors />
+    <examples>
+      <example>
+        <title>Example 1: 文本字符串输入</title>
+        <introduction>
+          <para>PS C:\&gt;</para>
+        </introduction>
+        <code>ConvertTo-PSFormatXml -IntputObject $(Get-Content .\Cmdlet-Format.txt -Raw)</code>
+        <remarks>
+          <para># 将类格式文本作为字符串重构为哈希表, 并生成 xml</para>
+        </remarks>
+      </example>
+      <example>
+        <title>Example 2: Format.ps1 文件输入</title>
+        <introduction>
+          <para>PS C:\&gt;</para>
+        </introduction>
+        <code>ConvertTo-PSFormatXml -Path .\Cmdlet-Format.ps1 -OutXml .\Cmdlet.format.ps1xml</code>
+        <remarks>
+          <para># 在 ps1 中编写好易读的格式架构, 语法格式参考格式架构的编写方式</para>
+          <para># https://docs.microsoft.com/zh-cn/powershell/scripting/developer/format/writing-a-powershell-formatting-file</para>
+        </remarks>
+      </example>
+    </examples>
+    <relatedLinks>
+      <navigationLink>
+        <linkText>github</linkText>
+        <uri>https://github.com/empyrealtear/PSModuleDevTool</uri>
+      </navigationLink>
+      <navigationLink>
+        <linkText>Resolve-PSIndentSyntax</linkText>
+        <uri />
+      </navigationLink>
+      <navigationLink>
+        <linkText>ConvertTo-PSHelpXml</linkText>
+        <uri />
+      </navigationLink>
+      <navigationLink>
+        <linkText>ConvertTo-PSTypeXml</linkText>
+        <uri />
+      </navigationLink>
+    </relatedLinks>
+  </command>
+  <command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+    <details>
+      <name>ConvertTo-PSTypeXml</name>
+      <description>
+        <para>转化指定哈希表为 types.ps1xml</para>
+      </description>
+      <copyright />
+      <version />
+      <verb>ConvertTo</verb>
+      <noun>PSTypeXml</noun>
+    </details>
+    <description>
+      <para>转化指定哈希表为 types.ps1xml</para>
+    </description>
+    <syntax>
+      <syntaxItem>
+        <name>ConvertTo-PSTypeXml</name>
+        <parameter required="true" position="0" globbing="false" pipelineInput="false" variableLength="true">
+          <name>Path</name>
+          <description />
+          <parameterValue required="true" variableLength="false">string</parameterValue>
+        </parameter>
+        <parameter required="false" position="1" globbing="false" pipelineInput="false" variableLength="true">
+          <name>Encoding</name>
+          <description />
+          <parameterValueGroup>
+            <parameterValue required="true" variableLength="false">Unicode</parameterValue>
+            <parameterValue required="true" variableLength="false">UTF8</parameterValue>
+            <parameterValue required="true" variableLength="false">Ascii</parameterValue>
+            <parameterValue required="true" variableLength="false">Default</parameterValue>
+            <parameterValue required="true" variableLength="false">...</parameterValue>
+          </parameterValueGroup>
+        </parameter>
+        <parameter required="false" position="named" globbing="false" pipelineInput="false" variableLength="true">
+          <name>OutXml</name>
+          <description />
+          <parameterValue required="true" variableLength="false">string</parameterValue>
+        </parameter>
+      </syntaxItem>
+      <syntaxItem>
+        <name>ConvertTo-PSTypeXml</name>
+        <parameter required="true" position="0" globbing="false" pipelineInput="false" variableLength="true">
+          <name>InputObject</name>
+          <description />
+          <parameterValue required="true" variableLength="false">String[]</parameterValue>
+        </parameter>
+        <parameter required="false" position="named" globbing="false" pipelineInput="false" variableLength="true">
+          <name>OutXml</name>
+          <description />
+          <parameterValue required="true" variableLength="false">string</parameterValue>
+        </parameter>
+      </syntaxItem>
+    </syntax>
+    <parameters>
+      <parameter required="true" position="0" globbing="false" pipelineInput="false" variableLength="true">
+        <name>Path</name>
+        <description>
+          <para># 建议搭配 vscode 编写 Type.ps1</para>
+          <para># 支持 Get-Content -Raw 输入</para>
+        </description>
+        <parameterValue required="true" variableLength="false">String</parameterValue>
+      </parameter>
+      <parameter required="false" position="1" globbing="false" pipelineInput="false" variableLength="true">
+        <name>Encoding</name>
+        <description>
+          <para># powershell支持编码的枚举器</para>
+        </description>
+        <parameterValue required="true" variableLength="false">Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding</parameterValue>
+      </parameter>
+      <parameter required="true" position="0" globbing="false" pipelineInput="false" variableLength="true">
+        <name>InputObject</name>
+        <description>
+          <para># 成员扩展文本字符串</para>
+        </description>
+        <parameterValue required="true" variableLength="false">string[]</parameterValue>
+      </parameter>
+      <parameter required="false" position="named" globbing="false" pipelineInput="true" variableLength="true">
+        <name>OutXml</name>
+        <description>
+          <para># 保存 xml 的路径</para>
+        </description>
+        <parameterValue required="true" variableLength="false">string</parameterValue>
+      </parameter>
+    </parameters>
+    <inputTypes>
+      <inputType>
+        <type>
+          <name>None</name>
+          <uri />
+        </type>
+        <description />
+      </inputType>
+    </inputTypes>
+    <returnValues>
+      <returnValue>
+        <type>
+          <name>None</name>
+          <uri />
+        </type>
+        <description />
+      </returnValue>
+    </returnValues>
+    <terminatingErrors />
+    <nonTerminatingErrors />
+    <examples>
+      <example>
+        <title>Example 1: 文本字符串输入</title>
+        <introduction>
+          <para>PS C:\&gt;</para>
+        </introduction>
+        <code>ConvertTo-PSTypeXml -IntputObject $(Get-Content .\Cmdlet-Type.txt)</code>
+        <remarks>
+          <para># 将成员扩展文本作为字符串重构为哈希表, 并生成 xml</para>
+        </remarks>
+      </example>
+      <example>
+        <title>Example 2: Type.ps1 文件输入</title>
+        <introduction>
+          <para>PS C:\&gt;</para>
+        </introduction>
+        <code>ConvertTo-PSTypeXml -Path .\Cmdlet-Type.ps1 -OutXml .\Cmdlet.types.ps1xml</code>
+        <remarks>
+          <para># 在 ps1 中编写好易读的成员扩展文档, 语法格式参考成员扩展的编写方式</para>
+          <para># https://docs.microsoft.com/zh-cn/powershell/module/microsoft.powershell.core/about/about_types.ps1xml</para>
+        </remarks>
+      </example>
+    </examples>
+    <relatedLinks>
+      <navigationLink>
+        <linkText>github</linkText>
+        <uri>https://github.com/empyrealtear/PSModuleDevTool</uri>
+      </navigationLink>
+      <navigationLink>
+        <linkText>Resolve-PSIndentSyntax</linkText>
+        <uri />
+      </navigationLink>
+      <navigationLink>
+        <linkText>ConvertTo-PSHelpXml</linkText>
+        <uri />
+      </navigationLink>
+      <navigationLink>
+        <linkText>ConvertTo-PSFormatXml</linkText>
+        <uri />
+      </navigationLink>
+    </relatedLinks>
+  </command>
+</helpItems>
